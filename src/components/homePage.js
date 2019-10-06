@@ -1,26 +1,35 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
 import {onSearch} from "../store/actions";
-import Card from "./card.js";
+import WeatherCard from "./weatherCard.js";
+import ForecastCard from "./forecastCard.js";
+import ErrorBoundary from "./errorBoundary.js";
+import AboutUs from "./aboutUs";
+
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             cityName: "",
-            loading: false
+            loading: false,
+            show: false
         }
     }
 
-    onSubmitHandler = (evt) => {
-        console.log("cityName", this.state.cityName);
-        this.props.onSearch(this.state.cityName);
-        this.setState({ cityName: "" });
-        evt.preventDefault(evt);
+    showHandler=()=>{
+        this.setState({show: true});
+    }
+
+    hideHandler=()=>{
+        console.log("blur")
+        this.setState({show: false});
     }
 
     onChangeHandler = (evt) => {
-        this.setState({ [evt.target.name]: evt.target.value })
+        this.setState({ [evt.target.name]: evt.target.value },()=>{
+            this.props.onSearch(this.state.cityName)
+        })     
     }
 
     componentWillReceiveProps(nextProps){
@@ -30,49 +39,32 @@ class HomePage extends Component {
     }
 
     render() {
-        // console.log()
         return (
-            <div>
+            <div className = "MainPage">
+                <div className="HomePage" >
                 <h1>Weather-App</h1>
-                Enter the city
-                  <form onSubmit={evt => this.onSubmitHandler(evt)}>
-                    <input list ="cities" name="cityName" value={this.state.cityName} onChange={evt => this.onChangeHandler(evt)} />
-                    <datalist id="cities">
-                        <option value="Lucknow"/>
-                        <option value="Udaipur"/>
-                        <option value="London"/>
-                        <option value="Bengaluru"/>
-                        <option value="Ratlam"/>
-                    </datalist>
-                    <button type="submit" onClick={evt => this.onSubmitHandler(evt)}>Search</button>
-                </form>                                
+                <h3>Select City</h3>
+                <select className="Select" name="cityName" value={this.state.cityName} onChange={evt => this.onChangeHandler(evt)}>
+                    <option disabled value="">List of cities</option>
+                    <option value="Lucknow">Lucknow</option>
+                    <option value="Udaipur">Udaipur</option>
+                    <option value="London">London</option>
+                    <option value="Bengaluru">Bengaluru</option>                        
+                </select>
+                <br/>
                 {(this.state.loading)?"...loading":<div className="card">
-                    <Card >Current weather data 
-                        Temperature: {this.props.searchState.data?this.props.searchState.data.data.list[0].main.temp:null} K 
-                        Pressure: {this.props.searchState.data?this.props.searchState.data.data.list[0].main.pressure:null} hPa 
-                        Humidity: {this.props.searchState.data?this.props.searchState.data.data.list[0].main.humidity:null} %               
-                        {(this.props.searchState.data)?this.props.searchState.data.data.list[0].weather.map(el=>{
-                            return(<div>Weather: {el.main}
-
-                            <img src ={`http://openweathermap.org/img/w/${el.icon}.png`} 
-         alt="wthr img" /></div>)
-                        }):null}
-                    </Card>
-                    <Card >5 day weather forecast
-                    {(this.props.searchState.data)?this.props.searchState.data.data.list.map(el=>{
-                        return(<div>
-                            {el.dt_txt}
-                            {el.weather.map(el=>{
-                            return(<div>{el.main}
-                            <img src ={`http://openweathermap.org/img/w/${el.icon}.png`} 
-         alt="wthr img" /></div>)
-                        })}
-                        </div>)
-                    }):null}
-
-                    </Card>
+                    <ErrorBoundary>
+                        <WeatherCard data={this.props.searchState.data} err={this.props.searchState.err} />
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                        <ForecastCard data={this.props.searchState.data} err={this.props.searchState.err}/>
+                    </ErrorBoundary>
                 </div> }
-                <div>About Us</div>
+                </div>
+                <div ><span onClick={this.showHandler} onBlur={this.hideHandler} tabIndex={1}>About Us</span></div>
+                <div>
+                    {(this.state.show)?<AboutUs/>:<div></div>}
+                </div>
             </div>
         )
     }

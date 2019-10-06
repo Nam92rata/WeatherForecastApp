@@ -1,6 +1,3 @@
-import { onSearch, onSuccess, onError } from "./actions";
-
-
 const initialState = {
     inProgress: false,
     data: null,
@@ -9,7 +6,6 @@ const initialState = {
 
 
 const reducer = (state = initialState, action) => {
-    console.log("reducer ran", action, state);
     switch (action.type) {
         case "ON_SEARCH":
             return Object.assign({}, state, { inProgress: true })
