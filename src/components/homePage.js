@@ -39,6 +39,7 @@ class HomePage extends Component {
     }
 
     render() {
+        console.log("eee",this.props.searchState)
         return (
             <div className = "MainPage">
                 <div className="HomePage" >
@@ -54,7 +55,7 @@ class HomePage extends Component {
                 <br/>
                 {(this.state.loading)?"...loading":<div className="card">
                     <ErrorBoundary>
-                        <WeatherCard data={this.props.searchState.data} err={this.props.searchState.err} />
+                        <WeatherCard data={this.props.searchState.curr} err={this.props.searchState.currErr} />
                     </ErrorBoundary>
                     <ErrorBoundary>
                         <ForecastCard data={this.props.searchState.data} err={this.props.searchState.err}/>

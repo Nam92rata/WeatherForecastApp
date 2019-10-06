@@ -8,8 +8,17 @@ export const onSuccess = (data) => ({
     payload: data
 })
 
+export const onCurrSuccess = (data) => ({
+    type: "ON_CURR_SUCCESS",
+    payload: data
+})
 
 export const onError = (err) => ({
     type: "ON_ERROR",
+    payload: err
+})
+
+export const onCurrError = (err) => ({
+    type: "ON_CURR_ERROR",
     payload: err
 })

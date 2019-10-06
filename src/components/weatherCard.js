@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import ErrorBoundary from "./errorBoundary.js";
 
 class WeatherCard extends Component {
     render() {
+        console.log("Weather", this.props.err)
         return (
             <div className="card1">
                 <h3>Current weather data</h3>
@@ -11,19 +13,19 @@ class WeatherCard extends Component {
                             <div className="row">
                                 <div className="col col-bkg">
                                     <div>Temperature</div>
-                                    <div>{this.props.data.data.list[0].main.temp} K</div>
+                                    <div>{this.props.data.data.main.temp} K</div>
                                 </div>
                                 <div className="col col-bkg-oblique">
                                     <div>Pressure</div>
-                                    <div>{this.props.data.data.list[0].main.pressure} hPa</div>
+                                    <div>{this.props.data.data.main.pressure} hPa</div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col col-bkg-oblique">
                                     <div>Humidity</div>
-                                    <div>{this.props.data.data.list[0].main.humidity} %</div>
+                                    <div>{this.props.data.data.main.humidity} %</div>
                                 </div>
-                                <div className="col col-bkg">{this.props.data.data.list[0].weather.map((el, index) => {
+                                <div className="col col-bkg">{this.props.data.data.weather.map((el, index) => {
                                     return (<div key={index}>
                                         <div>Weather</div>
                                         <div>{el.main}</div>
@@ -38,9 +40,7 @@ class WeatherCard extends Component {
                     <br />
                     {this.props.err ?
                         <div>
-                            {this.props.err ? <div>
-                                {this.props.err.error.message}
-                            </div> : null}
+                            {this.props.err.message}
                         </div> : null
                     }
                 </div>
