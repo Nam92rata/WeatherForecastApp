@@ -5,7 +5,7 @@ import WeatherCard from "./weatherCard.js";
 import ForecastCard from "./forecastCard.js";
 import ErrorBoundary from "./errorBoundary.js";
 import AboutUs from "./aboutUs";
-
+import ClipLoader from 'react-spinners/ClipLoader';
 
 class HomePage extends Component {
     constructor(props) {
@@ -38,34 +38,38 @@ class HomePage extends Component {
     }
 
     render() {
-        return (
-            <div className = "MainPage">
-                <div className="HomePage" >
-                <h1>Weather-App</h1>
-                <h3>Select City</h3>
-                <select className="Select" name="cityName" value={this.state.cityName} onChange={evt => this.onChangeHandler(evt)}>
-                    <option disabled value="">List of cities</option>
-                    <option value="Lucknow">Chicago</option>
-                    <option value="Udaipur">Udaipur</option>
-                    <option value="London">London</option>
-                    <option value="Bengaluru">Bengaluru</option>                        
-                </select>
-                <br/>
-                {(this.state.loading)?"...loading":<div className="card">
-                    <ErrorBoundary>
-                        <WeatherCard data={this.props.searchState.curr} err={this.props.searchState.currErr} />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
-                        <ForecastCard data={this.props.searchState.data} err={this.props.searchState.err}/>
-                    </ErrorBoundary>
-                </div> }
+        if(this.state.loading){
+            return (
+                <ClipLoader/>
+            )
+        }else{
+            return (
+                <div className = "MainPage">
+                    <div className="HomePage" >
+                    <select className="Select" name="cityName" value={this.state.cityName} onChange={evt => this.onChangeHandler(evt)}>
+                        <option disabled value="">List of cities</option>
+                        <option value="Lucknow">Chicago</option>
+                        <option value="Udaipur">Udaipur</option>
+                        <option value="London">London</option>
+                        <option value="Bengaluru">Bengaluru</option>                        
+                    </select>
+                    <br/>
+                    {(!this.state.cityName)?<div className="hiddenCard"></div>:<div className="card">
+                        <ErrorBoundary>
+                            <WeatherCard data={this.props.searchState.curr} err={this.props.searchState.currErr} />
+                        </ErrorBoundary>
+                        <ErrorBoundary>
+                            <ForecastCard data={this.props.searchState.data} err={this.props.searchState.err}/>
+                        </ErrorBoundary>
+                    </div> }
+                    </div>
+                    <div ><span onClick={this.showHandler} onBlur={this.hideHandler} tabIndex={1}>About Us</span></div>
+                    <div >
+                        {(this.state.show)?<AboutUs/>:null}
+                    </div>
                 </div>
-                <div ><span onClick={this.showHandler} onBlur={this.hideHandler} tabIndex={1}>About Us</span></div>
-                <div >
-                    {(this.state.show)?<AboutUs/>:null}
-                </div>
-            </div>
-        )
+            )
+        }
     }
 }
 
