@@ -5,7 +5,7 @@ import Axios from 'axios';
 const API_KEY = "3fbb2b31fd3e77c536be64abc677a4d1"
 
 const fetchWeather = (payload) => {
-    return Axios.get(`http://api.openweathermap1.org/data/2.5/forecast?appid=${API_KEY}&q=${payload}&count=3`)
+    return Axios.get(`http://api.openweathermap.org/data/2.5/forecast?appid=${API_KEY}&q=${payload}&count=3`)
 }
 const fetchCurrentWeather = (payload) => {
     return Axios.get(`http://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&q=${payload}`)

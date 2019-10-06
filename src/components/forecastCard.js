@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class ForecastCard extends Component {
     render() {
-        console.log("state in forecast", this.props.data)
         return (
             <div className="card1">
                 <h3>5 day weather forecast</h3>

@@ -22,7 +22,6 @@ class HomePage extends Component {
     }
 
     hideHandler=()=>{
-        console.log("blur")
         this.setState({show: false});
     }
 
@@ -39,7 +38,6 @@ class HomePage extends Component {
     }
 
     render() {
-        console.log("eee",this.props.searchState)
         return (
             <div className = "MainPage">
                 <div className="HomePage" >
@@ -47,7 +45,7 @@ class HomePage extends Component {
                 <h3>Select City</h3>
                 <select className="Select" name="cityName" value={this.state.cityName} onChange={evt => this.onChangeHandler(evt)}>
                     <option disabled value="">List of cities</option>
-                    <option value="Lucknow">Lucknow</option>
+                    <option value="Lucknow">Chicago</option>
                     <option value="Udaipur">Udaipur</option>
                     <option value="London">London</option>
                     <option value="Bengaluru">Bengaluru</option>                        
@@ -63,8 +61,8 @@ class HomePage extends Component {
                 </div> }
                 </div>
                 <div ><span onClick={this.showHandler} onBlur={this.hideHandler} tabIndex={1}>About Us</span></div>
-                <div>
-                    {(this.state.show)?<AboutUs/>:<div></div>}
+                <div >
+                    {(this.state.show)?<AboutUs/>:null}
                 </div>
             </div>
         )
@@ -72,7 +70,6 @@ class HomePage extends Component {
 }
 
 const mapStateToProps=(state)=>{
-    console.log("state in homePage", state)
     return ({
         searchState: state
     })
