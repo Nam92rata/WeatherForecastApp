@@ -22,3 +22,8 @@ export const onCurrError = (err) => ({
     type: "ON_CURR_ERROR",
     payload: err
 })
+
+export const logout = () => ({
+    type: "LOGOUT",
+    payload: null
+})

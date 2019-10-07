@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ErrorBoundary from "./errorBoundary.js";
+import { connect } from "react-redux";
 
 class WeatherCard extends Component {
     render() {
-        const [data, err] = [this.props.data, this.props.err];
+        const [data, err] = [this.props.searchState.curr, this.props.searchState.currErr];
 
         return (
             <div className="card1">
@@ -37,7 +38,7 @@ class WeatherCard extends Component {
                                     </div>)
                                 })}</div>
                             </div>
-                        </div> : null}
+                        </div> : "Select a city"}
                     <br />
                     {err ?
                         <div>
@@ -53,4 +54,10 @@ class WeatherCard extends Component {
     }
 }
 
-export default WeatherCard;
+const mapStateToProps = (state) => {
+    return ({
+        searchState: state
+    })
+}
+
+export default connect(mapStateToProps)(WeatherCard);

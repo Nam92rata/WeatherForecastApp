@@ -19,8 +19,11 @@ const reducer = (state = initialState, action) => {
             return Object.assign({}, state, { err: action.payload, inProgress: false })
         case "ON_CURR_ERROR":
             return Object.assign({}, state, { currErr: action.payload, inProgress: false })
+        case "LOGOUT":
+            return Object.assign({}, state, { data: null, curr: null, inProgress: false })
+        default:
+            return state;
     }
-    return state;
 }
 
 export default reducer;
