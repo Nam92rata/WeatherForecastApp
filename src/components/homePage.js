@@ -9,8 +9,10 @@ import AboutUs from "./aboutUs";
 import ClipLoader from 'react-spinners/ClipLoader';
 import createHistory from 'history/createBrowserHistory';
 
+
 import {
     BrowserRouter as Router,
+    Switch,
     Route,
     Link
 } from 'react-router-dom';
@@ -82,9 +84,11 @@ class HomePage extends Component {
                                     </div>
                                     {this.state.loading ? <ClipLoader /> :
                                         <div>
-                                            <Route path='/HomePage' component={WeatherCard}></Route>
-                                            <Route path='/ForecastCard' component={ForecastCard}></Route>
-                                            <Route path='/About' component={AboutUs}></Route>
+                                            <Switch>
+                                                <Route exact path='/HomePage' component={WeatherCard}></Route>
+                                                <Route path='/ForecastCard' component={ForecastCard}></Route>
+                                                <Route path='/About' component={AboutUs}></Route>
+                                            </Switch>
                                         </div>
                                     }
                                 </div>
