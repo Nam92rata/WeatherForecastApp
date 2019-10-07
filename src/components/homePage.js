@@ -77,7 +77,7 @@ class HomePage extends Component {
                             <Router history={createHistory}>
                                 <div>
                                     <div className="AppBar">
-                                        <div className="tab"><Link to="/HomePage"><button className="button">WeatherCard</button></Link></div>
+                                        <div className="tab"><Link to="/"><button className="button">WeatherCard</button></Link></div>
                                         <div className="tab"><Link to="/ForecastCard"><button className="button">ForecastCard</button></Link></div>
                                         <div className="tab"><Link to="/About"><button className="button">About</button></Link></div>
                                         <div className="tab"><button className="button" onClick={this.logoutHandler}>Logout</button></div>
@@ -85,7 +85,7 @@ class HomePage extends Component {
                                     {this.state.loading ? <ClipLoader /> :
                                         <div>
                                             <Switch>
-                                                <Route exact path='/HomePage' component={WeatherCard}></Route>
+                                                <Route exact path='/' component={WeatherCard}></Route>
                                                 <Route path='/ForecastCard' component={ForecastCard}></Route>
                                                 <Route path='/About' component={AboutUs}></Route>
                                             </Switch>
